@@ -1,7 +1,9 @@
 :root {
   --color-accent: oklch(65% 50% 0);
-  --color-border: oklch(80% 3% 200);
+  /* Semi-transparent so it stays subtle in both light and dark mode */
+  --border-color: oklch(50% 10% 200 / 40%);
   accent-color: var(--color-accent);
+  color-scheme: light dark;
 }
 
 body {
@@ -34,8 +36,10 @@ h1 {
 /* Step 2: navigation bar */
 nav {
   display: flex;
+  /* Leave room above for the theme switcher so they never overlap */
+  margin-top: 2rem;
   margin-bottom: 1em;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--border-color);
 
   a {
     flex: 1;
@@ -45,14 +49,14 @@ nav {
     padding: 0.5em;
 
     &.current {
-      border-bottom: 0.4em solid var(--color-border);
+      border-bottom: 0.4em solid var(--border-color);
       padding-bottom: 0.1em;
     }
 
     &:hover {
       border-bottom: 0.4em solid var(--color-accent);
       padding-bottom: 0.1em;
-      background-color: oklch(from var(--color-accent) 95% 5% h);
+      background-color: color-mix(in oklch, var(--color-accent), canvas 85%);
     }
   }
 }
@@ -60,8 +64,17 @@ nav {
 /* Step 3: contact form */
 input,
 textarea,
-button {
+button,
+select {
   font: inherit;
+}
+
+/* Step 4.3: theme switcher in the top right corner */
+.color-scheme {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 80%;
 }
 
 form {
@@ -127,7 +140,7 @@ form {
       text-transform: uppercase;
       letter-spacing: 0.05em;
       font-size: 120%;
-      border-bottom: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--border-color);
       padding-bottom: 0.3em;
     }
   }
@@ -142,7 +155,7 @@ form {
 
       p {
         margin: 0.2em 0 0;
-        color: oklch(50% 3% 200);
+        color: color-mix(in oklch, canvastext 65%, canvas);
       }
     }
 
