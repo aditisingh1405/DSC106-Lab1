@@ -30,7 +30,10 @@ let selectedYear = null; // the selected wedge's year label; null = nothing sele
 // their own variable and then filter through this one shared function.
 function filterByQuery(projectsGiven) {
   return projectsGiven.filter((project) => {
-    let values = Object.values(project).join('\n').toLowerCase();
+    // Search all visible metadata; skip the image URL, which is identical for
+    // every project and contains words like "labs" that would match everything
+    let { image, ...searchable } = project;
+    let values = Object.values(searchable).join('\n').toLowerCase();
     return values.includes(query.toLowerCase());
   });
 }
